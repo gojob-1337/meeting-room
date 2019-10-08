@@ -54,6 +54,7 @@ class MeetingStarted extends React.PureComponent {
           success
           as={Button}
           key={"start-early"}
+          color="black"
           onClick={() => startMeetingEarly("start-early")}
           isLoading={currentActionSource === "start-early"}
           children={i18next.t("actions.start-early")}
@@ -69,12 +70,14 @@ class MeetingStarted extends React.PureComponent {
   renderCheckInToMeeting() {
     const { currentMeeting, currentActionSource, checkInToMeeting, minutesLeftForCheckIn } = this.props;
 
+    console.log(currentActionSource)
     return (
       <>
         <LoaderButton
           as={Button}
           success
           key={"check-in"}
+          color="black"
           onClick={() => checkInToMeeting("check-in")}
           isLoading={currentActionSource === "check-in"}
           children={i18next.t("actions.check-in")}
@@ -86,7 +89,7 @@ class MeetingStarted extends React.PureComponent {
 
         {minutesLeftForCheckIn > 0 && (
           <div style={{ color: colors.foreground.white, marginTop: ".5rem", fontSize: "0.8rem" }}>
-            <img src={warningIcon} style={{height: ".8rem", "padding-right": ".5rem", position: "relative", top: ".1rem"}} alt="warning"/>
+            <img src={warningIcon} style={{height: ".8rem", paddingRight: ".5rem", position: "relative", top: ".1rem"}} alt="warning"/>
             {i18next.t("actions.check-in-warning", { count: Math.ceil(minutesLeftForCheckIn) })}
           </div>
         )}
