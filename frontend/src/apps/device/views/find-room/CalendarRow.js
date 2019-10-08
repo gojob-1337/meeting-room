@@ -13,10 +13,10 @@ import {
   isRetryingActionSelector,
   nextMeetingSelector,
   timestampSelector
-} from "apps/device/store/selectors";
+} from "apps/device/selectors/selectors";
 import { getMeetingSummary, prettyFormatMinutes, timeDifferenceInMinutes } from "services/formatting";
 import { Time } from "theme";
-import { deviceActions, meetingActions } from "apps/device/store/actions";
+import { deviceActions, meetingActions } from "apps/device/actions/actions";
 import ActionError from "../../components/ActionError";
 import Section, { partialMixin } from "dark/Section";
 import LoaderButton from "dark/LoaderButton";
@@ -29,7 +29,7 @@ const CustomButton = styled(Button)`
     display: inline-block;
     width: auto;
   }
-`
+`;
 
 const Header = styled.div`
   display: flex;
@@ -148,6 +148,7 @@ const CalendarRow = ({
   const CreateButton = ({ value, name }) => (
     <LoaderButton
       as={CustomButton}
+      color="black"
       disabled={currentActionSource !== null}
       isLoading={currentActionSource === name}
       onClick={() => createMeeting(calendarId, value, name)}

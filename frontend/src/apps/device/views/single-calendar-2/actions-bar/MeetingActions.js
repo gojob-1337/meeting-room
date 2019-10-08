@@ -1,8 +1,8 @@
 import React from "react";
 import i18next from "i18next";
 import { connect } from "react-redux";
-
 import LoaderButton from "dark/LoaderButton";
+
 import colors from "dark/colors";
 import { prettyFormatMinutes } from "services/formatting";
 import {
@@ -12,11 +12,12 @@ import {
   minutesAvailableTillNextMeetingSelector,
   minutesLeftForCheckInSelector,
   requireCheckInSelector
-} from "apps/device/store/selectors";
-
-import { meetingActions } from "apps/device/store/actions";
+} from "apps/device/selectors/selectors";
+import { meetingActions } from "apps/device/actions/actions";
 
 import Button, { Button2 } from "./Button";
+
+import warningIcon from "../../../../../theme/images/warning-icon.svg";
 
 class MeetingStarted extends React.PureComponent {
   state = { idOfMeetingToCancel: null };
@@ -53,6 +54,7 @@ class MeetingStarted extends React.PureComponent {
           success
           as={Button}
           key={"start-early"}
+          color="black"
           onClick={() => startMeetingEarly("start-early")}
           isLoading={currentActionSource === "start-early"}
           children={i18next.t("actions.start-early")}
@@ -68,12 +70,14 @@ class MeetingStarted extends React.PureComponent {
   renderCheckInToMeeting() {
     const { currentMeeting, currentActionSource, checkInToMeeting, minutesLeftForCheckIn } = this.props;
 
+    console.log(currentActionSource)
     return (
       <>
         <LoaderButton
           as={Button}
           success
           key={"check-in"}
+          color="black"
           onClick={() => checkInToMeeting("check-in")}
           isLoading={currentActionSource === "check-in"}
           children={i18next.t("actions.check-in")}
@@ -84,7 +88,8 @@ class MeetingStarted extends React.PureComponent {
         </Button2>
 
         {minutesLeftForCheckIn > 0 && (
-          <div style={{ color: colors.foreground.gray, marginTop: ".5rem", fontSize: "0.8rem" }}>
+          <div style={{ color: colors.foreground.white, marginTop: ".5rem", fontSize: "0.8rem" }}>
+            <img src={warningIcon} style={{height: ".8rem", paddingRight: ".5rem", position: "relative", top: ".1rem"}} alt="warning"/>
             {i18next.t("actions.check-in-warning", { count: Math.ceil(minutesLeftForCheckIn) })}
           </div>
         )}
@@ -93,9 +98,16 @@ class MeetingStarted extends React.PureComponent {
   }
 
   renderExtendMeeting() {
-    const { minutesToNextMeeting, currentActionSource, extendMeeting, isAfterCurrentMeetingStartTime, cancelMeeting, endMeeting } = this.props;
+    const {
+      minutesToNextMeeting,
+      currentActionSource,
+      extendMeeting,
+      isAfterCurrentMeetingStartTime,
+      cancelMeeting,
+      endMeeting
+    } = this.props;
 
-    const ExtendButton = ({ value, name, label = '' }) => (
+    const ExtendButton = ({ value, name, label = "" }) => (
       <>
         <LoaderButton
           key={name}
@@ -105,28 +117,32 @@ class MeetingStarted extends React.PureComponent {
           isLoading={currentActionSource === name}
           onClick={() => extendMeeting(value, name)}
         >
-          {label}{prettyFormatMinutes(value)}
+          {label}
+          {prettyFormatMinutes(value)}
         </LoaderButton>{" "}
       </>
     );
 
     const showCustomExtensionTime = minutesToNextMeeting > 0 && minutesToNextMeeting <= 70;
 
-    const onEnd= () => (isAfterCurrentMeetingStartTime ? endMeeting("end-meeting") : cancelMeeting("end-meeting"));
+    const onEnd = () => (isAfterCurrentMeetingStartTime ? endMeeting("end-meeting") : cancelMeeting("end-meeting"));
 
     return (
       <>
-        <Button
+        <LoaderButton
           error
-          key={"end-now"}
+          as={Button}
+          key="end-now"
+          color="black"
           disabled={currentActionSource !== null}
+          isLoading={currentActionSource === "end-meeting"}
           onClick={onEnd}
         >
           End meeting
-        </Button>{" "}
+        </LoaderButton>{" "}
         {minutesToNextMeeting > 0 && (
           <>
-            {minutesToNextMeeting > 20 && <ExtendButton value={15} name="extend-15" label="+ "/>}
+            {minutesToNextMeeting > 20 && <ExtendButton value={15} name="extend-15" label="+ " />}
             {showCustomExtensionTime && <ExtendButton value={minutesToNextMeeting} name="extend-custom" />}
           </>
         )}

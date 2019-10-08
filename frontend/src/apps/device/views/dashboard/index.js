@@ -8,7 +8,7 @@ import {
   isAmPmClockSelector,
   showAvailableRoomsSelector,
   timestampSelector
-} from "apps/device/store/selectors";
+} from "apps/device/selectors/selectors";
 import EventRow from "./EventRow";
 import { PageLoaded } from "theme";
 
@@ -18,7 +18,7 @@ import colors from "dark/colors";
 import Time from "theme/components/Time";
 import RowView from "./RowView";
 import CalendarRow from "./CalendarRow";
-import { displayNameSelector, fontSizeSelector } from "../../store/selectors";
+import { displayNameSelector, fontSizeSelector } from "../../selectors/selectors";
 
 const Header = styled(Section).attrs({ header: true })`
   padding: 0.4rem 0.85rem 0.2rem 0.85rem;
@@ -45,11 +45,11 @@ const Dashboard = ({ timestamp, isAmPmClock, displayName, events, calendars, sho
 
   return (
     <Layout style={{ overflow: "hidden" }} fontSize={fontSize}>
-      <PageLoaded/>
+      <PageLoaded />
       <Header>
         <span>{displayName || i18next.t("dashboard.page-title")}</span>
         <span>
-          <Time timestamp={timestamp} ampm={isAmPmClock} smallSuffix blinking/>
+          <Time timestamp={timestamp} ampm={isAmPmClock} smallSuffix blinking />
         </span>
       </Header>
       {hasAnyRows && (
@@ -63,8 +63,8 @@ const Dashboard = ({ timestamp, isAmPmClock, displayName, events, calendars, sho
       )}
 
       <div>
-        {showAvailableRooms && calendars.map((calendar, index) => <CalendarRow key={index} calendarId={calendar.id}/>)}
-        {events.map((event, index) => <EventRow key={index} meeting={event}/>)}
+        {showAvailableRooms && calendars.map((calendar, index) => <CalendarRow key={index} calendarId={calendar.id} />)}
+        {events.map((event, index) => <EventRow key={index} meeting={event} />)}
         {!hasAnyRows && <NoMeetingsInfo>{i18next.t("dashboard.no-meetings")}</NoMeetingsInfo>}
       </div>
     </Layout>

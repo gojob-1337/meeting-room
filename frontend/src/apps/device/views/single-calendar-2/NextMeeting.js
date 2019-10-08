@@ -2,10 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
 
-
 import { Time } from "theme/index";
-import { nextMeetingSelector } from "../../store/selectors";
-import { isAmPmClockSelector } from "apps/device/store/selectors";
+import { nextMeetingSelector } from "../../selectors/selectors";
+import { isAmPmClockSelector } from "apps/device/selectors/selectors";
 import colors from "dark/colors";
 import { getMeetingSummary } from "services/formatting";
 
@@ -37,8 +36,7 @@ const NextMeetingTime = styled.span`
 
 const NextMeeting = ({ nextMeeting, isAmPmClock }) => (
   <Wrapper>
-    <NextLabel>Upcoming: </NextLabel>
-    {' '}
+    <NextLabel>Upcoming: </NextLabel>{" "}
     <NextMeetingTime>
       {!nextMeeting.isAllDayEvent && (
         <>

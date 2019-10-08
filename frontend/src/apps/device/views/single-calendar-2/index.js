@@ -7,11 +7,12 @@ import {
   fontSizeSelector,
   isAmPmClockSelector,
   nextMeetingSelector,
-  getRoomStatus
-} from "../../store/selectors";
+  getRoomStatus,
+  timestampSelector
+} from "../../selectors/selectors";
 
 import NextMeeting from "./NextMeeting";
-import { deviceActions } from "apps/device/store/actions";
+import { deviceActions } from "apps/device/actions/actions";
 import colors from "dark/colors";
 import Time from "theme/components/Time";
 import CurrentMeeting from "./CurrentMeeting";
@@ -37,6 +38,7 @@ const Button = styled.button`
   margin: 0;
   font-weight: 500;
   border-radius: 0.3rem;
+  border: none;
 `;
 
 const ActionsWrapper = styled.div`
@@ -50,7 +52,8 @@ const Spacer = styled.div`
 const statusBg = {
   available: "linear-gradient(135deg, rgba(0,136,51,1) 0%, rgba(0,204,51,1) 100%);",
   occupied: "linear-gradient(135deg, rgba(192,0,0,1) 0%, rgba(224,0,0,1) 100%)",
-  warning: "linear-gradient(135deg, rgba(0,85,153,1) 0%, rgba(0,119,187,1) 100%);"
+  warning: "linear-gradient(135deg, rgba(0,85,153,1) 0%, rgba(0,119,187,1) 100%);",
+  checkin: "linear-gradient(135deg, #fe6800 0%, #fb3b00 100%);"
 };
 
 const CalendarView = ({
@@ -83,7 +86,11 @@ const CalendarView = ({
       <Spacer />
 
       {nextMeeting && <NextMeeting />}
-      <div style={{ color: 'white', fontSize: '50%', position: 'absolute', bottom: '0.6rem', right: '1rem', opacity: 0.5 }}>v{process.env.REACT_APP_VERSION}</div>
+      <div
+        style={{ color: "white", fontSize: "50%", position: "absolute", bottom: "0.6rem", right: "1rem", opacity: 0.5 }}
+      >
+        v{process.env.REACT_APP_VERSION}
+      </div>
     </Layout>
   );
 };
@@ -91,7 +98,7 @@ const CalendarView = ({
 const mapStateToProps = state => ({
   calendarName: calendarNameSelector(state),
   nextMeeting: nextMeetingSelector(state),
-  currentTimestamp: state.timestamp,
+  currentTimestamp: timestampSelector(state),
   isAmPmClock: isAmPmClockSelector(state),
   fontSize: fontSizeSelector(state),
   roomStatus: getRoomStatus(state)
