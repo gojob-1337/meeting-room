@@ -37,7 +37,7 @@
     "find-room": "Trouver une salle",
     "check-in-warning": "Cette réunion sera annulée dans {{ count }} min."
   },
-  "full-screen": "Pein écran",
+  "full-screen": "Plein écran",
   "errors": {
     "unable-to-connect-server": "Serveur injoignable",
     "check-internet-and-try-again": "Vérifiez votre connexion et recommencez",

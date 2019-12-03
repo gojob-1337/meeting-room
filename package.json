@@ -3,8 +3,8 @@
   "version": "1.8.0",
   "private": true,
   "engines": {
-    "node": "10.15.1",
-    "npm": "6.4.1"
+    "node": "10.x",
+    "yarn": "1.19.x"
   },
   "scripts": {
     "storybook": "start-storybook",
@@ -12,7 +12,7 @@
     "dev:backend": "cross-env PORT=3000 NODE_ENV=development nodemon --watch backend index.js",
     "test:frontend": "cd frontend && cross-env NODE_PATH=./src react-scripts test",
     "build:frontend": "cd frontend && cross-env GENERATE_SOURCEMAP=false REACT_APP_VERSION=$npm_package_version react-scripts build",
-    "heroku-postbuild": "npm run build:frontend",
+    "heroku-postbuild": "yarn build:frontend",
     "start": "node index.js",
     "docker:build": "cross-env-shell docker build -t ziolko/roombelt:$npm_package_version -t ziolko/roombelt:latest .",
     "docker:publish": "cross-env-shell docker push ziolko/roombelt:$npm_package_version && docker push ziolko/roombelt:latest"
