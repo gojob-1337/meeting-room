@@ -22,7 +22,8 @@
     "guests": "et 1 invité",
     "guests_plural": "et {{ count }} invités",
     "next": "À venir",
-    "quick-meeting-title": "Meeting in {{ roomName }}"
+    "quick-meeting-title": "Réunion {{ roomName }}",
+    "book-for": "Réserver "
   },
   "actions": {
     "end-now": "Libérer",

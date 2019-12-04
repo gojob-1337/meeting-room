@@ -22,7 +22,8 @@
     "guests": "with 1 participant",
     "guests_plural": "with {{ count }} participants",
     "next": "Next",
-    "quick-meeting-title": "Meeting in {{ roomName }}"
+    "quick-meeting-title": "Meeting in {{ roomName }}",
+    "book-for": "Book for "
   },
   "actions": {
     "end-now": "End now",

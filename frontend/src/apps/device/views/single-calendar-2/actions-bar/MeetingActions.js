@@ -70,7 +70,6 @@ class MeetingStarted extends React.PureComponent {
   renderCheckInToMeeting() {
     const { currentMeeting, currentActionSource, checkInToMeeting, minutesLeftForCheckIn } = this.props;
 
-    console.log(currentActionSource)
     return (
       <>
         <LoaderButton
@@ -138,7 +137,7 @@ class MeetingStarted extends React.PureComponent {
           isLoading={currentActionSource === "end-meeting"}
           onClick={onEnd}
         >
-          End meeting
+          {i18next.t("actions.end-now")}
         </LoaderButton>{" "}
         {minutesToNextMeeting > 0 && (
           <>

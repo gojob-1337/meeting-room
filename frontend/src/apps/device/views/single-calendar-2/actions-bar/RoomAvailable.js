@@ -7,6 +7,7 @@ import { currentActionSourceSelector, minutesAvailableTillNextMeetingSelector } 
 import { meetingActions } from "apps/device/actions/actions";
 
 import Button, { Button2 } from "./Button";
+import i18next from "i18next";
 
 const RoomAvailable = props => {
   const CreateButton = ({ value, name, color, label = "", as = Button }) => (
@@ -26,7 +27,7 @@ const RoomAvailable = props => {
 
   return (
     <div>
-      {props.minutesToNextMeeting > 20 && <CreateButton color="black" value={15} name="create-15" label="Book for " />}
+      {props.minutesToNextMeeting > 20 && <CreateButton color="black" value={15} name="create-15" label={i18next.t("meeting.book-for")} />}
       {props.minutesToNextMeeting > 40 && <CreateButton as={Button2} value={30} name="create-30" />}
       {props.minutesToNextMeeting > 70 && <CreateButton as={Button2} value={60} name="create-60" />}
       {props.minutesToNextMeeting > 130 && <CreateButton as={Button2} value={120} name="create-120" />}
@@ -35,7 +36,7 @@ const RoomAvailable = props => {
           as={Button2}
           value={props.minutesToNextMeeting}
           name="create-custom"
-          label={props.minutesToNextMeeting <= 20 && "Book for "}
+          label={props.minutesToNextMeeting <= 20 && i18next.t("meeting.book-for")}
         />
       )}
     </div>
