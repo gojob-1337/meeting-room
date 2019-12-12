@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import IoIosHelpCircleOutline from "react-icons/lib/io/ios-help-outline";
+import { IoIosHelpCircleOutline } from "react-icons/io";
 
 const Wrapper = styled.div`
   font-size: 18px;

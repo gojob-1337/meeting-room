@@ -8,6 +8,7 @@
     "available-all-day": "Ganztags verfügbar",
     "occupied": "Belegt",
     "occupied-all-day": "Ganztags belegt",
+    "left": "{{ time }} left",
     "starts": {
       "now": "Beginnt jetzt",
       "ago": "Begann vor einer Minute",
@@ -47,8 +48,7 @@
     "action-conflict": "Der angeforderte Vorgang steht in Konflikt mit einem anderen Ereignis in diesem Kalender",
     "refresh-page": "Seite neu laden",
     "device-disconnected-title": "Verbindung getrennt",
-    "device-disconnected-message": "Dieses Gerät wurde in der Administrations-Konsole getrennt. Wollen Sie erneut eine Verbindung herstellen?",
-    "subscription-cancelled": "Produktabonnement wurde gekündigt"
+    "device-disconnected-message": "Dieses Gerät wurde in der Administrations-Konsole getrennt. Wollen Sie erneut eine Verbindung herstellen?"
   },
   "dashboard": {
     "page-title": "Meetingräume",

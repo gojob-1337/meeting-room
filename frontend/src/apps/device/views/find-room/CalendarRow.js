@@ -21,7 +21,6 @@ import ActionError from "../../components/ActionError";
 import Section, { partialMixin } from "dark/Section";
 import LoaderButton from "dark/LoaderButton";
 import colors from "dark/colors";
-import PeopleIcon from "./PeopleIcon";
 import Button from "./Button";
 
 const CustomButton = styled(Button)`
@@ -140,11 +139,6 @@ const CalendarRow = ({
   );
   const startingSoon = meetingStartingSoon(currentMeeting, timestamp);
 
-  let people = calendarName.match(/[0-9]+P/g);
-  if (people && people[0]) {
-    people = people[0].slice(0, -1);
-  }
-
   const CreateButton = ({ value, name }) => (
     <LoaderButton
       as={CustomButton}
@@ -161,9 +155,6 @@ const CalendarRow = ({
       <RowCard statusColor={getStatusColor(meetingInProgress, timeToStart, startingSoon)}>
         <Header>
           <span style={{ fontSize: "1.2rem" }}>{calendarName}</span>
-          <span>
-            <PeopleIcon /> {people ? people : "?"}
-          </span>
         </Header>
         <Content>
           <div>
@@ -177,9 +168,9 @@ const CalendarRow = ({
                       <Time timestamp={currentMeeting.startTimestamp} ampm={isAmPmClock} />
                       {" - "}
                       <Time timestamp={currentMeeting.endTimestamp} ampm={isAmPmClock} />
-                      {startingSoon ? ` · Starts in ${startingSoon} min` : ""}
+                      {startingSoon ? ` · ${i18next.t("dashboard.starts-in", { time: startingSoon })} min` : ""}
                       {!startingSoon && (meetingInProgress || meetingEndsSoon(timeToStart))
-                        ? ` · Ends in ${meetingEndsIn(currentMeeting, timestamp)} min`
+                        ? ` · ${i18next.t("dashboard.ends-in", { time: meetingEndsIn(currentMeeting, timestamp) })} min`
                         : ""}
                     </>
                   )}

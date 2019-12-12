@@ -1,9 +1,7 @@
 const ms = require("ms");
 const Sequelize = require("sequelize");
-const Moment = require("moment");
 const Storage = require("./storage");
 const config = require("./config");
-const premiumPlans = require("./services/premium-plans");
 
 const GoogleCalendar = require("./services/google-calendar");
 const Office365Calendar = require("./services/office365-calendar");
@@ -13,28 +11,6 @@ const storage = new Storage(
     logging: process.env.NODE_ENV !== "production" && console.log
   })
 );
-
-async function getSubscriptionStatus(oauth) {
-  if (!config.paddleApiKey || !oauth) {
-    return null;
-  }
-
-  const isSubscriptionCancelled = oauth.isSubscriptionCancelled;
-
-  const now = Moment();
-  const endOfTrial = Moment(oauth.createdAt).add(30, "days");
-  const isTrialExpired = !oauth.subscriptionPlanId && now.isAfter(endOfTrial);
-  const isTrialLongExpired = isTrialExpired && now.isAfter(endOfTrial.add(3, "days"));
-
-  const currentPlan = premiumPlans[oauth.subscriptionPlanId];
-  const connectedDevicesCount = storage.devices.countDevicesForUser(oauth.userId);
-  const isUpgradeRequired = currentPlan && currentPlan.maxDevices < connectedDevicesCount;
-
-  return {
-    isAdminPanelBlocked: isSubscriptionCancelled || isUpgradeRequired || isTrialExpired,
-    areDevicesBlocked: isSubscriptionCancelled || isUpgradeRequired || isTrialLongExpired
-  };
-}
 
 const createContext = (cookieName, cookieTTL) => async (req, res) => {
   if (!cookieName) {
@@ -52,8 +28,6 @@ const createContext = (cookieName, cookieTTL) => async (req, res) => {
   const googleCalendarProvider = new GoogleCalendar(config.google, (oauth && oauth.provider === "google") ? oauth : null);
   const office365CalendarProvider = new Office365Calendar(config.office365, (oauth && oauth.provider) === "office365" ? oauth : null);
 
-  const subscriptionStatus = await getSubscriptionStatus(oauth);
-
   req.context = {
     storage,
     calendarProvider: oauth && (oauth.provider === "office365" ? office365CalendarProvider : googleCalendarProvider),
@@ -62,7 +36,6 @@ const createContext = (cookieName, cookieTTL) => async (req, res) => {
       office365: office365CalendarProvider
     },
     session,
-    subscriptionStatus,
     removeSession: async () => {
       await storage.session.deleteSession(req.context.session.token);
       res.clearCookie(cookieName, { httpOnly: true });

@@ -4,7 +4,7 @@ import styled from "styled-components/macro";
 import moment from "moment";
 import ms from "ms";
 
-import IoAndroidMoreVertical from "react-icons/lib/io/android-more-vertical";
+import { IoMdMore } from "react-icons/io";
 import { translations } from "i18n";
 
 import {
@@ -77,7 +77,7 @@ const SingleDeviceRow = props => {
         </Text>
       </TableRowColumn>
       <TableRowColumn style={{ textAlign: "right" }}>
-        <DropdownMenu trigger={<IoAndroidMoreVertical style={{ cursor: "pointer", color: "#555" }}/>}>
+        <DropdownMenu trigger={<IoMdMore style={{ cursor: "pointer", color: "#555" }}/>}>
           <DropdownMenuItem onClick={props.onConfigureClicked}>Configure</DropdownMenuItem>
           <DropdownMenuItem onClick={props.onDeleteClicked}>Disconnect</DropdownMenuItem>
         </DropdownMenu>

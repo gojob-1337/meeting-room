@@ -4,7 +4,7 @@ import styled, { createGlobalStyle, css } from "styled-components/macro";
 
 import Card from "./Card";
 import Button from "./Button";
-import IoAndroidClose from "react-icons/lib/io/android-close";
+import { IoMdClose } from "react-icons/io";
 
 const glassVisibleClass = "rui-modal-glass";
 
@@ -71,7 +71,7 @@ const FooterWrapper = styled.div`
 const DefaultHeader = props => (
   <React.Fragment>
     <div>{props.title}</div>
-    <IoAndroidClose
+    <IoMdClose
       onClick={() => props.onCloseButtonClicked && props.onCloseButtonClicked()}
       style={{ cursor: "pointer" }}
     />

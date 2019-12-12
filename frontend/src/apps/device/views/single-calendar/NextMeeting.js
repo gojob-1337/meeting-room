@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
 
-import DateRange from "react-icons/lib/md/date-range";
+import { MdDateRange } from "react-icons/md";
 
 import { Time } from "theme/index";
 import { nextMeetingSelector } from "../../selectors/selectors";
@@ -57,7 +57,7 @@ const NextMeeting = ({ nextMeeting, isAmPmClock }) => (
         </>
       )}
     </NextMeetingTime>
-    <DateRange style={{ transform: "translateY(0.1rem)" }} />
+    <MdDateRange style={{ transform: "translateY(0.1rem)" }} />
   </Wrapper>
 );
 

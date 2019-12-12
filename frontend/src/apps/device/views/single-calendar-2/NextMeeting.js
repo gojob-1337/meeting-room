@@ -7,6 +7,7 @@ import { nextMeetingSelector } from "../../selectors/selectors";
 import { isAmPmClockSelector } from "apps/device/selectors/selectors";
 import colors from "dark/colors";
 import { getMeetingSummary } from "services/formatting";
+import i18next from "i18next";
 
 const Wrapper = styled.div`
   padding: 0.6em 1.2em;
@@ -36,7 +37,7 @@ const NextMeetingTime = styled.span`
 
 const NextMeeting = ({ nextMeeting, isAmPmClock }) => (
   <Wrapper>
-    <NextLabel>Upcoming: </NextLabel>{" "}
+    <NextLabel>{i18next.t("meeting.next") + ": "}</NextLabel>{" "}
     <NextMeetingTime>
       {!nextMeeting.isAllDayEvent && (
         <>

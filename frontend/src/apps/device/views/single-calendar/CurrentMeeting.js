@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { Time } from "theme/index";
 import styled from "styled-components/macro";
 import colors from "dark/colors";
-import EventAvailable from "react-icons/lib/md/event-available";
-import AccountBox from "react-icons/lib/md/account-box";
+import { MdEventAvailable } from "react-icons/md";
+import { MdAccountBox } from "react-icons/md";
 import {
   currentMeetingSelector,
   isAmPmClockSelector,
@@ -61,11 +61,11 @@ const CurrentMeeting = ({ currentMeeting, nextMeeting, minutesToNextMeeting, isA
   return (
     <Wrapper>
       <Indent>
-        <EventAvailable style={{ color: colors.foreground.white, verticalAlign: "middle", width: "1.5rem" }}/>
+        <MdEventAvailable style={{ color: colors.foreground.white, verticalAlign: "middle", width: "1.5rem" }}/>
         <span style={{ verticalAlign: "middle" }}>{getTitle()}</span>
       </Indent>
       {showHost && <Indent>
-        <AccountBox style={{ color: colors.foreground.white, verticalAlign: "middle", width: "1.5rem" }}/>
+        <MdAccountBox style={{ color: colors.foreground.white, verticalAlign: "middle", width: "1.5rem" }}/>
         <span style={{ verticalAlign: "middle" }}>
           {currentMeeting.organizer.displayName}
           {showGuests && guests.length > 0 && guests.length <= 5 && (", " + guests.map(u => u.displayName).join(", "))}

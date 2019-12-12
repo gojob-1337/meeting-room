@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import IoPlusRound from "react-icons/lib/io/plus";
-import IoIosPulse from "react-icons/lib/io/ios-pulse";
+import { IoMdAdd, IoIosPulse } from "react-icons/io";
 import { Button, PageTitle } from "../../theme";
 import { auditLogActions, connectDeviceWizardActions } from "apps/admin/store/actions";
 
@@ -14,7 +13,7 @@ const StatisticsButton = props => (
 
 const ConnectDeviceButton = props => (
   <Button primary style={{ marginLeft: 10, fontSize: 13 }} onClick={props.onClick}>
-    <IoPlusRound/> <span style={{ verticalAlign: "middle" }}>New device</span>
+    <IoMdAdd/> <span style={{ verticalAlign: "middle" }}>New device</span>
   </Button>
 );
 

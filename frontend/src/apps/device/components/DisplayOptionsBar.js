@@ -1,8 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components/macro";
 import { connect } from "react-redux";
-import IoAndroidExpand from "react-icons/lib/io/android-expand";
-import IoAndroidContract from "react-icons/lib/io/android-contract";
+import { IoMdExpand, IoMdContract } from "react-icons/io";
 import { deviceActions } from "apps/device/actions/actions";
 import { isCalendarSelectedSelector, isDashboardDeviceSelector } from "apps/device/selectors/selectors";
 
@@ -55,7 +54,7 @@ const DisplayOptionsBar = props => {
     <Wrapper>
       <Button tabIndex={0} onClick={props.decreaseFontSize}>-</Button>
       {props.isFullScreenSupported && <Button tabIndex={0} onClick={props.requestFullScreen}>
-        {props.isFullScreen ? <IoAndroidContract/> : <IoAndroidExpand/>}
+        {props.isFullScreen ? <IoMdContract/> : <IoMdExpand/>}
       </Button>}
       <Button tabIndex={0} onClick={props.increaseFontSize}>+</Button>
     </Wrapper>

@@ -13,7 +13,6 @@ import {
   isDeviceRemovedSelector,
   isInitializedSelector,
   isInOfflineModeSelector,
-  isSubscriptionCancelledSelector,
   lastActivityOnShowCalendarsViewSelector,
   minutesLeftForCheckInSelector,
   showAllCalendarsViewSelector
@@ -32,7 +31,6 @@ import { endAction } from "../state/currentMeetingActions/currentMeetingActions.
 import {
   $markInitialized,
   $markRemoved,
-  $setIsSubscriptionCancelled,
   $updateOfflineStatus,
   $updateShowAllCalendarsView,
   $allCalendarsViewActivity
@@ -61,7 +59,7 @@ const $initializeApiVersionObserver = () => async () => {
 
 const $initializeFullScreenSupport = () => dispatch => {
   const updateStatus = () => {
-    dispatch($updateFullScreenState(screenfull.enabled, screenfull.isFullscreen));
+    dispatch($updateFullScreenState(screenfull.isEnabled, screenfull.isFullscreen));
   };
 
   updateStatus();
@@ -112,14 +110,10 @@ export const deviceActions = {
       changeLanguage(device.language);
 
       dispatch($updateDeviceData(device));
-      dispatch($setIsSubscriptionCancelled(false));
       dispatch(deviceActions.$removeCurrentMeetingIfNotCheckedIn());
     } catch (error) {
       if (error.response && error.response.status === 404) {
         dispatch($markRemoved());
-      }
-      if (error.response && error.response.status === 402) {
-        dispatch($setIsSubscriptionCancelled(true));
       }
     }
 
@@ -127,7 +121,6 @@ export const deviceActions = {
       const state = getState();
 
       if (isDeviceRemovedSelector(state)) return ms("1 year");
-      if (isSubscriptionCancelledSelector(state)) return ms("10 min");
       if (isDashboardDeviceSelector(state) || isCalendarSelectedSelector(state)) return ms("30s");
 
       return ms("5s");
@@ -155,7 +148,7 @@ export const deviceActions = {
   $updateClock,
 
   toggleFullScreen: () => () => {
-    if (screenfull.enabled) {
+    if (screenfull.isEnabled) {
       screenfull.toggle();
     }
   },

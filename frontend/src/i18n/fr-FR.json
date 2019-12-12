@@ -8,6 +8,7 @@
     "available-all-day": "Disponible toute la journée",
     "occupied": "Occupée",
     "occupied-all-day": "Occupée toute la journée",
+    "left": "{{ time }} restant",
     "starts": {
       "now": "Commence maintenant",
       "ago": "Commencé il y a 1 minute",
@@ -47,8 +48,7 @@
     "action-conflict": "L'opération demandée est en conflit avec un autre événement de ce calendrier",
     "refresh-page": "Rafraîchir la page",
     "device-disconnected-title": "Appareil déconnecté",
-    "device-disconnected-message": "Cet appareil a été déconnecté dans le panneau d'administration. Souhaitez-vous le reconnecter ?",
-    "subscription-cancelled": "L'abonnement à Roombelt à été annulé"
+    "device-disconnected-message": "Cet appareil a été déconnecté dans le panneau d'administration. Souhaitez-vous le reconnecter ?"
   },
   "dashboard": {
     "page-title": "Salles de réunion",

@@ -8,6 +8,7 @@
     "available-all-day": "Wolne cały dzień",
     "occupied": "Zajęte",
     "occupied-all-day": "Zajęte cały dzień",
+    "left": "{{ time }} left",
     "starts": {
       "now": "Zaczyna się teraz",
       "ago_0": "Zaczęło się minutę temu",
@@ -50,8 +51,7 @@
     "action-conflict": "Żądana operacja powoduje konflikt z innym wydarzeniem w tym kalendarzu",
     "refresh-page": "Odśwież stronę",
     "device-disconnected-title": "Urządzenie usunięte",
-    "device-disconnected-message": "To urządzenie zostało usuniętę w panelu administracyjnym. Czy chesz połączyć je ponownie?",
-    "subscription-cancelled": "Subskrypcja na system Roombelt zostałą anulowana"
+    "device-disconnected-message": "To urządzenie zostało usuniętę w panelu administracyjnym. Czy chesz połączyć je ponownie?"
   },
   "dashboard": {
     "page-title": "Sale konferencyjne",

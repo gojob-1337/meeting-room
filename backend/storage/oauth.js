@@ -9,13 +9,6 @@ module.exports = class {
       provider: Sequelize.STRING,
       accessToken: Sequelize.TEXT,
       refreshToken: Sequelize.TEXT,
-
-      // subscriptions
-      subscriptionPassthrough: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4 },
-      subscriptionId: Sequelize.INTEGER,
-      subscriptionPlanId: Sequelize.INTEGER,
-      subscriptionUpdateUrl: Sequelize.TEXT,
-      isSubscriptionCancelled: { type: Sequelize.BOOLEAN, defaultValue: false }
     });
   }
 
@@ -26,27 +19,5 @@ module.exports = class {
 
   async getByUserId(userId) {
     return await this.Model.findByPk(userId);
-  }
-
-  async getBySubscriptionPassthrough(subscriptionPassthrough) {
-    return await this.Model.findOne({ where: { subscriptionPassthrough } });
-  }
-
-  async createSubscription(userId, subscriptionId, subscriptionPlanId, subscriptionUpdateUrl) {
-    await this.Model.upsert({
-      userId,
-      subscriptionId,
-      subscriptionPlanId,
-      subscriptionUpdateUrl,
-      isSubscriptionCancelled: false
-    });
-  }
-
-  async updateSubscription(userId, subscriptionPlanId) {
-    await this.Model.update({ subscriptionPlanId }, { where: { userId } });
-  }
-
-  async cancelSubscription(userId) {
-    await this.Model.update({ isSubscriptionCancelled: true }, { where: { userId } });
   }
 };

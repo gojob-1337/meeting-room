@@ -1,8 +1,6 @@
 import { action } from "utils/redux";
-import ms from "ms";
 
 import {
-  cancelSubscription,
   connectDevice,
   disconnectDevice,
   getAuditLog,
@@ -10,20 +8,13 @@ import {
   getConnectedDevices,
   getUserDetails,
   setOptionsForDevice,
-  setSubscriptionPlan,
-  setUserProperty
 } from "services/api";
 
 import {
-  canConnectAnotherDeviceSelector,
-  currentSubscriptionPlanSelector,
   editDeviceDataSelector,
   newDeviceDataSelector,
   removedDeviceIdSelector,
-  subscriptionUpdateUrlSelector
 } from "./selectors";
-import { isCheckoutOverlayOpenSelector, subscriptionPassthroughSelector } from "apps/admin/store/selectors";
-import { wait } from "utils/time";
 
 export const adminActions = {
   $setDevices: action(devices => ({ devices })),
@@ -37,19 +28,6 @@ export const adminActions = {
       getUserDetails()
     ]);
 
-    if (window.drift) {
-      window.drift.identify(user.subscriptionPassthrough, {
-        name: user.displayName,
-        subscription: user.subscriptionPassthrough
-      });
-    }
-
-    if (process.env.REACT_APP_LOGROCKET_ID) {
-      const LogRocket = require("logrocket");
-      LogRocket.init(process.env.REACT_APP_LOGROCKET_ID);
-      LogRocket.identify(user.subscriptionPassthrough, { name: user.displayName });
-    }
-
     dispatch(adminActions.$setCalendars(calendars));
     dispatch(adminActions.$setUserDetails(user));
     dispatch(adminActions.$setDevices(devices));
@@ -58,12 +36,8 @@ export const adminActions = {
 
 export const connectDeviceWizardActions = {
   $show: action(),
-  show: () => async (dispatch, getState) => {
-    if (canConnectAnotherDeviceSelector(getState())) {
-      dispatch(connectDeviceWizardActions.$show());
-    } else {
-      dispatch(monetizationActions.openPlanDialog());
-    }
+  show: () => async (dispatch) => {
+    dispatch(connectDeviceWizardActions.$show());
   },
   hide: action(),
 
@@ -156,127 +130,6 @@ export const removeDeviceDialogActions = {
 
     dispatch(adminActions.$setDevices(await getConnectedDevices()));
     dispatch(removeDeviceDialogActions.hide());
-  }
-};
-
-export const monetizationActions = {
-  init: () => () => {
-    if (window.Paddle) {
-      window.Paddle.Setup({ vendor: 39570 });
-    }
-  },
-
-  $setIsCheckoutOverlayOpen: action(isCheckoutOverlayOpen => ({ isCheckoutOverlayOpen })),
-  $toggleOverlay: isVisible => (dispatch) => {
-    document.body.style.overflow = isVisible ? "hidden" : "auto";
-    dispatch(monetizationActions.$setIsCheckoutOverlayOpen(isVisible));
-  },
-
-  openCheckoutOverlay: productId => (dispatch, getState) => {
-    if (isCheckoutOverlayOpenSelector(getState())) {
-      return;
-    }
-
-    const currentSubscriptionPlan = currentSubscriptionPlanSelector(getState());
-
-    dispatch(monetizationActions.$toggleOverlay(true));
-
-    window.Paddle.Checkout.open({
-      product: productId,
-      locale: "en",
-      passthrough: subscriptionPassthroughSelector(getState()),
-      closeCallback: () => dispatch(monetizationActions.$toggleOverlay(false)),
-      successCallback: () => {
-        dispatch(monetizationActions.$toggleOverlay(false));
-        dispatch(monetizationActions.$waitUntilSubscriptionPlanIdChanges(currentSubscriptionPlan));
-      }
-    });
-  },
-
-  openUpdateSubscriptionOverlay: () => (dispatch, getState) => {
-    dispatch(monetizationActions.$toggleOverlay(true));
-
-    const hideOverlay = () => dispatch(monetizationActions.$toggleOverlay(false));
-
-    window.Paddle.Checkout.open({
-      locale: "en",
-      override: subscriptionUpdateUrlSelector(getState()),
-      closeCallback: hideOverlay,
-      successCallback: hideOverlay
-    });
-  },
-
-  openPlanDialog: action(),
-  closePlanDialog: action(),
-
-  openCancelSubscriptionDialog: action(),
-  closeCancelSubscriptionDialog: action(),
-
-  confirmCancelSubscription: () => async (dispatch, getState) => {
-    try {
-      const currentSubscriptionPlan = currentSubscriptionPlanSelector(getState());
-
-      await cancelSubscription();
-
-      dispatch(monetizationActions.closeCancelSubscriptionDialog());
-      dispatch(monetizationActions.$waitUntilSubscriptionPlanIdChanges(currentSubscriptionPlan));
-    } catch (error) {
-      alert("Unable to cancel subscription. Please contact Roombelt support.");
-    }
-  },
-
-  selectSubscriptionPlan: subscriptionPlanId => async (dispatch, getState) => {
-    const currentSubscriptionPlan = currentSubscriptionPlanSelector(getState());
-
-    if (!currentSubscriptionPlan) {
-      dispatch(monetizationActions.openCheckoutOverlay(subscriptionPlanId));
-    } else {
-      try {
-        await setSubscriptionPlan(subscriptionPlanId);
-
-        dispatch(monetizationActions.$waitUntilSubscriptionPlanIdChanges(currentSubscriptionPlan));
-      } catch (error) {
-        alert("Unable to change subscription plan. Please contact Roombelt support.");
-      }
-    }
-  },
-
-  $toggleIsUpdatingSubscription: action((isUpdatingSubscription) => ({ isUpdatingSubscription })),
-  $waitUntilSubscriptionPlanIdChanges: (startingSubscriptionPlan) => async (dispatch, getState) => {
-    dispatch(monetizationActions.$toggleIsUpdatingSubscription(true));
-
-    while (startingSubscriptionPlan === currentSubscriptionPlanSelector(getState())) {
-      await wait(2000);
-      const user = await getUserDetails();
-      dispatch(adminActions.$setUserDetails(user));
-    }
-
-    dispatch(monetizationActions.$toggleIsUpdatingSubscription(false));
-  },
-
-  extendOnPremisesEvaluation: () => async dispatch => {
-    await setUserProperty("lastAcceptanceOfEvaluation", Date.now());
-    dispatch(adminActions.$setUserDetails(await getUserDetails()));
-    dispatch(monetizationActions.closePlanDialog());
-  },
-
-  buyOnPremises: () => async dispatch => {
-    dispatch(monetizationActions.$toggleOverlay(true));
-
-    window.Paddle.Checkout.open({
-      product: 561003,
-      locale: "en",
-      passthrough: null,
-      closeCallback: async () => {
-        dispatch(monetizationActions.$toggleOverlay(false));
-      },
-      successCallback: async () => {
-        await setUserProperty("lastAcceptanceOfEvaluation", Date.now() + ms("100 years"));
-        dispatch(adminActions.$setUserDetails(await getUserDetails()));
-        dispatch(monetizationActions.$toggleOverlay(false));
-        dispatch(monetizationActions.closePlanDialog());
-      }
-    });
   }
 };
 

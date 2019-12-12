@@ -6,6 +6,7 @@ import { deviceActions } from "./actions/actions";
 import DisplayOptionsBar from "./components/DisplayOptionsBar";
 
 import { getDeviceDetails, setHeader } from "../../services/api";
+import { IconContext } from "react-icons";
 
 export default class Device extends React.Component {
   async componentDidMount() {
@@ -26,10 +27,10 @@ export default class Device extends React.Component {
 
     return (
       <Provider store={store}>
-        <>
+        <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
           <Router />
           <DisplayOptionsBar />
-        </>
+        </IconContext.Provider>
       </Provider>
     );
   }

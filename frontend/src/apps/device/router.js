@@ -7,7 +7,6 @@ import {
   isDashboardDeviceSelector,
   isDeviceConnectedSelector,
   isDeviceRemovedSelector,
-  isSubscriptionCancelledSelector,
   showAllCalendarsViewSelector
 } from "./selectors/selectors";
 
@@ -25,7 +24,6 @@ const Router = ({
   isCalendarSelected,
   isDeviceConnected,
   isDeviceRemoved,
-  isSubscriptionCancelled,
   isOffline,
   disconnectDevice,
   showAllCalendarsView
@@ -40,7 +38,6 @@ const Router = ({
         button={"OK"}
       />
     );
-  if (isSubscriptionCancelled) return <FatalError title={i18next.t("errors.subscription-cancelled")} />;
   if (isDashboardDevice) return <Dashboard />;
   if (showAllCalendarsView) return <AllCalendars />;
   if (isCalendarSelected) return <SingleCalendar />;
@@ -58,7 +55,6 @@ const mapStateToProps = state => ({
   isDashboardDevice: isDashboardDeviceSelector(state),
   isCalendarSelected: isCalendarSelectedSelector(state),
   isDeviceRemoved: isDeviceRemovedSelector(state),
-  isSubscriptionCancelled: isSubscriptionCancelledSelector(state),
   showAllCalendarsView: showAllCalendarsViewSelector(state)
 });
 

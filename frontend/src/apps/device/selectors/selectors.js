@@ -2,7 +2,6 @@ import { createSelector } from "reselect";
 import { timeDifferenceInMinutes } from "../../../services/formatting";
 import i18next from "i18next";
 
-export const isSubscriptionCancelledSelector = state => state.appState.isSubscriptionCancelled;
 export const isDeviceRemovedSelector = state => state.appState.isRemoved;
 export const isInitializedSelector = state => state.appState.isInitialized;
 export const timestampSelector = state => state.timestamp.value;

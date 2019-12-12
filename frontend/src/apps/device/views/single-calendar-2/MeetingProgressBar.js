@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { prettyFormatMinutes, timeDifferenceInMinutes } from "services/formatting";
+import i18next from "i18next";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -34,7 +35,7 @@ export default ({timeStarted, timeEnding, currentTime}) => {
             <Bar>
                 <Progress percentDone={percentDone}/>
             </Bar>
-            <TimeLeft>{timeLeft} left</TimeLeft>
+            <TimeLeft>{i18next.t("availability.left", { time: timeLeft })}</TimeLeft>
         </Wrapper>
     )
 };

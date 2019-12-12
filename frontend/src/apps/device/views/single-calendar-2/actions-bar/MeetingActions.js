@@ -1,6 +1,7 @@
 import React from "react";
 import i18next from "i18next";
 import { connect } from "react-redux";
+import { MdWarning } from "react-icons/md";
 import LoaderButton from "dark/LoaderButton";
 
 import colors from "dark/colors";
@@ -16,8 +17,6 @@ import {
 import { meetingActions } from "apps/device/actions/actions";
 
 import Button, { Button2 } from "./Button";
-
-import warningIcon from "../../../../../theme/images/warning-icon.svg";
 
 class MeetingStarted extends React.PureComponent {
   state = { idOfMeetingToCancel: null };
@@ -88,8 +87,10 @@ class MeetingStarted extends React.PureComponent {
 
         {minutesLeftForCheckIn > 0 && (
           <div style={{ color: colors.foreground.white, marginTop: ".5rem", fontSize: "0.8rem" }}>
-            <img src={warningIcon} style={{height: ".8rem", paddingRight: ".5rem", position: "relative", top: ".1rem"}} alt="warning"/>
-            {i18next.t("actions.check-in-warning", { count: Math.ceil(minutesLeftForCheckIn) })}
+            <MdWarning style={{ paddingRight: ".5rem" }}/>
+            <span style={{ verticalAlign: "middle" }}>
+              {i18next.t("actions.check-in-warning", { count: Math.ceil(minutesLeftForCheckIn) })}
+            </span>
           </div>
         )}
       </>

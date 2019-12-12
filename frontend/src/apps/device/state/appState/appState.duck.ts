@@ -1,7 +1,6 @@
 import { makeReduxDuck } from "teedux";
 
 interface IState {
-  isSubscriptionCancelled: boolean;
   isRemoved: boolean;
   isInitialized: boolean;
   isOffline: boolean;
@@ -11,7 +10,6 @@ interface IState {
   lastActivityOnShowCalendarsView: null | number;
 }
 const initialState: IState = {
-  isSubscriptionCancelled: false,
   isRemoved: false,
   isInitialized: false,
   isOffline: false,
@@ -30,15 +28,6 @@ const markRemoved = duck.definePayloadlessAction("MARK_REMOVED", () => ({
   isRemoved: true
 }));
 export const $markRemoved = markRemoved;
-
-const setIsSubscriptionCancelled = duck.defineAction<{ isSubscriptionCancelled: boolean }>(
-  "SET_IS_SUBSCRIPTION_CANCELLED",
-  (_, { isSubscriptionCancelled }) => ({
-    isSubscriptionCancelled
-  })
-);
-export const $setIsSubscriptionCancelled = (isSubscriptionCancelled: boolean) =>
-  setIsSubscriptionCancelled({ isSubscriptionCancelled });
 
 const updateOfflineStatus = duck.defineAction<{ isOffline: boolean }>("UPDATE_OFFLINE_STATUS", (_, { isOffline }) => ({
   isOffline

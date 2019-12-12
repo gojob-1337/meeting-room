@@ -8,6 +8,7 @@
     "available-all-day": "Ledig hel dag",
     "occupied": "Upptagen",
     "occupied-all-day": "Upptagen hel dag",
+    "left": "{{ time }} left",
     "starts": {
       "now": "Börjar nu",
       "ago": "Startade för 1 minut sedan",

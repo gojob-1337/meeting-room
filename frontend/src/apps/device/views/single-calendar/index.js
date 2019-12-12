@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
-import MdLayers from "react-icons/lib/md/layers";
+import { MdLayers } from "react-icons/md";
 
 import {
   calendarNameSelector,

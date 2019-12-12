@@ -1,7 +1,8 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { IconContext } from "react-icons";
 
-import { adminActions, monetizationActions } from "apps/admin/store/actions";
+import { adminActions } from "apps/admin/store/actions";
 import { getUserDetails } from "services/api";
 
 import store from "./store";
@@ -11,7 +12,6 @@ class AdminApp extends React.PureComponent {
     getUserDetails().then(null, () => window.location = "/");
 
     store.dispatch(adminActions.initialFetch());
-    store.dispatch(monetizationActions.init());
 
     if (module.hot) {
       module.hot.accept("./Dashboard", () => this.forceUpdate());
@@ -23,7 +23,9 @@ class AdminApp extends React.PureComponent {
 
     return (
       <Provider store={store}>
-        <Dashboard/>
+        <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
+          <Dashboard/>
+        </IconContext.Provider>
       </Provider>
     );
   }

@@ -5,7 +5,6 @@ import {
   auditLogActions,
   connectDeviceWizardActions,
   editDeviceDialogActions,
-  monetizationActions,
   removeDeviceDialogActions
 } from "apps/admin/store/actions";
 
@@ -27,10 +26,6 @@ const user = (state = defaultUserState, action) => {
         displayName: action.user.displayName,
         avatarUrl: action.user.avatarUrl,
         properties: action.user.properties,
-        subscriptionPassthrough: action.user.subscriptionPassthrough,
-        subscriptionTrialEndTimestamp: action.user.subscriptionTrialEndTimestamp,
-        subscriptionPlanId: action.user.subscriptionPlanId,
-        subscriptionUpdateUrl: action.user.subscriptionUpdateUrl
       };
     case adminActions.$setUserProperty:
       return { ...state, properties: { ...state.properties, [action.propertyId]: action.value } };
@@ -160,31 +155,6 @@ const connectDeviceWizard = (state = defaultConnectDeviceWizardState, action) =>
   }
 };
 
-const monetization = (state = {
-  currentPlan: null,
-  isChoosePlanDialogOpenByUser: false,
-  isCancelSubscriptionDialogOpen: false,
-  isCheckoutOverlayOpen: false,
-  isUpdatingSubscription: false
-}, action) => {
-  switch (action.type) {
-    case monetizationActions.openPlanDialog:
-      return { ...state, isChoosePlanDialogOpenByUser: true };
-    case monetizationActions.closePlanDialog:
-      return { ...state, isChoosePlanDialogOpenByUser: false };
-    case monetizationActions.openCancelSubscriptionDialog:
-      return { ...state, isCancelSubscriptionDialogOpen: true };
-    case monetizationActions.closeCancelSubscriptionDialog:
-      return { ...state, isCancelSubscriptionDialogOpen: false };
-    case monetizationActions.$setIsCheckoutOverlayOpen:
-      return { ...state, isCheckoutOverlayOpen: action.isCheckoutOverlayOpen };
-    case monetizationActions.$toggleIsUpdatingSubscription:
-      return { ...state, isUpdatingSubscription: action.isUpdatingSubscription };
-    default:
-      return state;
-  }
-};
-
 const auditLog = (state = { isVisible: false, isLoading: false, entries: [] }, action) => {
   switch (action.type) {
     case auditLogActions.$show:
@@ -207,6 +177,5 @@ export default combineReducers({
   editedDevice,
   removedDevice,
   connectDeviceWizard,
-  monetization,
   auditLog
 });

@@ -175,7 +175,7 @@ module.exports = class {
     }
 
     const query = {
-      calendarId: encodeURIComponent(calendarId),
+      calendarId: calendarId,
       timeMin: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
       timeMax: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
       singleEvents: true,
@@ -197,7 +197,7 @@ module.exports = class {
 
   async createEvent(calendarId, { startDateTime, endDateTime, isCheckedIn, summary }) {
     const query = {
-      calendarId: encodeURIComponent(calendarId),
+      calendarId: calendarId,
       resource: {
         summary,
         start: { dateTime: new Date(startDateTime).toISOString() },
@@ -220,8 +220,8 @@ module.exports = class {
     if (isCheckedIn) resource.extendedProperties = { private: { roombeltIsCheckedIn: "true" } };
 
     const query = {
-      calendarId: encodeURIComponent(calendarId),
-      eventId: encodeURIComponent(eventId),
+      calendarId: calendarId,
+      eventId: eventId,
       resource
     };
 
@@ -234,8 +234,8 @@ module.exports = class {
 
   async declineEvent(calendarId, eventId) {
     const query = {
-      calendarId: encodeURIComponent(calendarId),
-      eventId: encodeURIComponent(eventId),
+      calendarId: calendarId,
+      eventId: eventId,
       sendUpdates: "all"
     };
 

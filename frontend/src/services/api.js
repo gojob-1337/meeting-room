@@ -73,14 +73,6 @@ export function setOptionsForDevice(deviceId, deviceType, calendarId, displayNam
   });
 }
 
-export function setSubscriptionPlan(subscriptionPlanId) {
-  return axios.put("/api/admin/subscription", { subscriptionPlanId });
-}
-
-export function cancelSubscription() {
-  return axios.delete("/api/admin/subscription");
-}
-
 export function getAuditLog(getAll = false) {
   return axios.get("/api/admin/audit", { params: { getAll } });
 }
