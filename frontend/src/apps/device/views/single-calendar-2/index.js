@@ -49,12 +49,12 @@ const Spacer = styled.div`
   flex-grow: 1;
 `;
 
-const statusBg = {
-  available: "linear-gradient(135deg, rgba(0,136,51,1) 0%, rgba(0,204,51,1) 100%);",
-  occupied: "linear-gradient(135deg, rgba(192,0,0,1) 0%, rgba(224,0,0,1) 100%)",
-  warning: "linear-gradient(135deg, rgba(0,85,153,1) 0%, rgba(0,119,187,1) 100%);",
-  checkin: "linear-gradient(135deg, #fe6800 0%, #fb3b00 100%);"
-};
+const statusBg = (calendarName) => ({
+  available: `linear-gradient(135deg, rgba(0,136,51,0.8) 0%, rgba(0,204,51,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
+  occupied: `linear-gradient(135deg, rgba(192,0,0,0.8) 0%, rgba(224,0,0,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
+  warning: `linear-gradient(135deg, rgba(0,85,153,0.8) 0%, rgba(0,119,187,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
+  checkin: `linear-gradient(135deg, rgba(254,104,0,0.8) 0%, rgba(251,59,0,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`
+});
 
 const CalendarView = ({
   calendarName,
@@ -66,7 +66,7 @@ const CalendarView = ({
   roomStatus
 }) => {
   usePageLoaded();
-  const background = roomStatus && statusBg[roomStatus.status];
+  const background = roomStatus && statusBg(calendarName)[roomStatus.status];
   return (
     <Layout flexbox fontSize={fontSize} fontFamily={"Lato, sans-serif"} background={background}>
       <Header>

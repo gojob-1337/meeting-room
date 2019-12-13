@@ -49,4 +49,7 @@ export default styled(({ flexbox, ...props}) => (<>
   width: 100%;
   font-family: ${props => props.fontFamily ? props.fontFamily : 'Lato, sans-serif'};
   background: ${props => props.background ? props.background : colors.background.medium};
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 `;

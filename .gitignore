@@ -4,3 +4,4 @@ node_modules
 *.sqlite
 roombelt.env
 /frontend/build
+/frontend/public/backgrounds/*/**
