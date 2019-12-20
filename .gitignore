@@ -5,3 +5,4 @@ node_modules
 roombelt.env
 /frontend/build
 /frontend/public/backgrounds/*/**
+/frontend/public/images/company.png

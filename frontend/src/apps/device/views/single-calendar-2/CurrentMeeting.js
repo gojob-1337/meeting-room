@@ -18,11 +18,12 @@ const Wrapper = styled.div`
   padding: 0.4rem 1rem;
 `;
 
-const Title = styled.h1`
+const Title = styled.span`
   color: white;
+  font-size: 1.5rem;
 `;
 
-const Meta = styled.p`
+const Meta = styled.span`
   color: white;
   display: flex;
 

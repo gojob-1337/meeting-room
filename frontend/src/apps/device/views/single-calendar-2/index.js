@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
+import ReactImageFallback from "react-image-fallback";
 
 import {
   calendarNameSelector,
@@ -25,11 +26,46 @@ const Header = styled.div`
   font-size: 1rem;
   padding: 1rem;
   color: ${colors.foreground.white};
+`;
+const CalendarDetails = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+`;
+
+const CompanyLogo = styled.div`
+  position: absolute;
+  height: 3.5rem;
+  top: .5rem;
+  left: 1rem;
+`;
+
+const Footer = styled.div`
+  font-size: 1rem;
+  padding: 1rem;
+  color: ${colors.foreground.white};
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 `;
-const CalendarDetails = styled.div``;
+
+const RoomInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const RoomName = styled.div`
+  font-size: 2.3rem;
+  color: ${colors.foreground.white};
+  padding: 1rem;
+  text-shadow: 1px 2px 1px rgba(0,0,0,0.3);
+`;
+
+const AppVersion = styled.div`
+  font-size: .5rem;
+  color: ${colors.foreground.white};
+  opacity: .5;
+`;
 
 const Button = styled.button`
   background: white;
@@ -67,17 +103,29 @@ const CalendarView = ({
 }) => {
   usePageLoaded();
   const background = roomStatus && statusBg(calendarName)[roomStatus.status];
+
   return (
     <Layout flexbox fontSize={fontSize} fontFamily={"Lato, sans-serif"} background={background}>
       <Header>
+        <CompanyLogo>
+          <ReactImageFallback
+            src="images/company.png"
+            fallbackImage="images/logo/logo-64.png"
+            alt="Company Logo"
+            style={{ maxHeight: "100%", width: "auto" }}
+          />
+        </CompanyLogo>
         <CalendarDetails>
-          <Time timestamp={currentTimestamp} ampm={isAmPmClock} blinking smallSuffix /> {calendarName}
+          <Button onClick={showAllCalendarsView}>{i18next.t("actions.find-room")}</Button>
         </CalendarDetails>
-
-        <Button onClick={showAllCalendarsView}>{i18next.t("actions.find-room")}</Button>
       </Header>
 
-      <CurrentMeeting />
+      <Spacer />
+
+      <RoomInfo>
+        <RoomName>{calendarName}</RoomName>
+        <CurrentMeeting />
+      </RoomInfo>
 
       <ActionsWrapper>
         <ActionsBar />
@@ -86,11 +134,11 @@ const CalendarView = ({
       <Spacer />
 
       {nextMeeting && <NextMeeting />}
-      <div
-        style={{ color: "white", fontSize: "50%", position: "absolute", bottom: "0.6rem", right: "1rem", opacity: 0.5 }}
-      >
-        v{process.env.REACT_APP_VERSION}
-      </div>
+
+      <Footer>
+        <AppVersion>v{process.env.REACT_APP_VERSION}</AppVersion>
+        <Time timestamp={currentTimestamp} ampm={isAmPmClock} blinking smallSuffix />
+      </Footer>
     </Layout>
   );
 };
