@@ -2,28 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
 
-import { MdDateRange } from "react-icons/md";
-
 import { Time } from "theme/index";
 import { nextMeetingSelector } from "../../selectors/selectors";
 import { isAmPmClockSelector } from "apps/device/selectors/selectors";
-import Section from "dark/Section";
 import colors from "dark/colors";
-import i18next from "i18next";
 import { getMeetingSummary } from "services/formatting";
+import i18next from "i18next";
 
-const Wrapper = styled(Section).attrs({ footer: true })`
+const Wrapper = styled.div`
   padding: 0.6em 1.2em;
-  display: flex;
+
   align-items: baseline;
   color: ${colors.foreground.white};
 `;
 
 const NextLabel = styled.div`
-  font-size: 1.5em;
+  font-size: 0.7em;
 `;
 
-const NextMeetingSummary = styled.div`
+const NextMeetingSummary = styled.span`
   font-size: 1.2em;
   margin-right: 1em;
   margin-left: 1em;
@@ -33,21 +30,14 @@ const NextMeetingSummary = styled.div`
   text-overflow: ellipsis;
 `;
 
-const NextMeetingTime = styled.div`
-  color: ${colors.foreground.gray};
+const NextMeetingTime = styled.span`
   margin-right: 0.5em;
   white-space: nowrap;
 `;
 
-const Spacer = styled.div`
-  flex-grow: 1;
-`;
-
 const NextMeeting = ({ nextMeeting, isAmPmClock }) => (
   <Wrapper>
-    <NextLabel>{i18next.t("meeting.next")}</NextLabel>
-    <Spacer />
-    <NextMeetingSummary>{getMeetingSummary(nextMeeting)}</NextMeetingSummary>{" "}
+    <NextLabel>{i18next.t("meeting.next") + ": "}</NextLabel>{" "}
     <NextMeetingTime>
       {!nextMeeting.isAllDayEvent && (
         <>
@@ -57,7 +47,7 @@ const NextMeeting = ({ nextMeeting, isAmPmClock }) => (
         </>
       )}
     </NextMeetingTime>
-    <MdDateRange style={{ transform: "translateY(0.1rem)" }} />
+    <NextMeetingSummary>{getMeetingSummary(nextMeeting)}</NextMeetingSummary>{" "}
   </Wrapper>
 );
 

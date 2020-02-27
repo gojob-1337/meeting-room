@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { Time } from "theme/index";
 import styled from "styled-components/macro";
 import colors from "dark/colors";
-import { MdEventAvailable } from "react-icons/md";
-import { MdAccountBox } from "react-icons/md";
+import MeetingsProgressBar from "./MeetingProgressBar"
 import {
   currentMeetingSelector,
   isAmPmClockSelector,
@@ -16,16 +15,20 @@ import { getMeetingSummary, prettyFormatMinutes } from "services/formatting";
 
 const Wrapper = styled.div`
   color: ${colors.foreground.gray};
-  padding: 0.4rem 1.2rem;
+  padding: 0.4rem 1rem;
 `;
 
-const Indent = styled.div`
-  text-indent: -1.5rem;
-  margin-left: 1.5rem;
-  
-  :after {
-    display: block;
-    content: '';
+const Title = styled.span`
+  color: white;
+  font-size: 1.5rem;
+`;
+
+const Meta = styled.span`
+  color: white;
+  display: flex;
+
+  @media (orientation: portrait) {
+    flex-direction: column;
   }
 `;
 
@@ -39,16 +42,23 @@ const CurrentMeeting = ({ currentMeeting, nextMeeting, minutesToNextMeeting, isA
       return i18next.t("availability.available-for", { time: prettyFormatMinutes(minutesToNextMeeting) });
     }
 
+    return <>{getMeetingSummary(currentMeeting)} </>;
+  };
+
+  const getTime = () => {
+    if (!currentMeeting) {
+      return <span style={{ opacity: 0}}>...</span>;
+    }
+
     return (
       <>
-        {getMeetingSummary(currentMeeting)}
-        {" "}
-        {!currentMeeting.isAllDayEvent &&
-        <span style={{ whitespace: "nowrap", display: "inline-block", textIndent: 0 }}>
-          {<Time timestamp={currentMeeting.startTimestamp} ampm={isAmPmClock}/>}
-          {" – "}
-          {<Time timestamp={currentMeeting.endTimestamp} ampm={isAmPmClock}/>}
-        </span>}
+        {!currentMeeting.isAllDayEvent && (
+          <span style={{ whitespace: "nowrap", display: "inline-block", textIndent: 0, paddingRight: 20}}>
+            {<Time timestamp={currentMeeting.startTimestamp} ampm={isAmPmClock} />}
+            {" – "}
+            {<Time timestamp={currentMeeting.endTimestamp} ampm={isAmPmClock} />}
+          </span>
+        )}
       </>
     );
   };
@@ -56,22 +66,23 @@ const CurrentMeeting = ({ currentMeeting, nextMeeting, minutesToNextMeeting, isA
   const showHost = currentMeeting && !currentMeeting.isCreatedFromDevice;
   const showGuests = currentMeeting && !currentMeeting.isPrivate && !currentMeeting.isCreatedFromDevice;
 
-  const guests = currentMeeting && currentMeeting.attendees.filter(u => u.displayName !== currentMeeting.organizer.displayName);
+  const guests =
+    currentMeeting && currentMeeting.attendees.filter(u => u.displayName !== currentMeeting.organizer.displayName);
 
   return (
     <Wrapper>
-      <Indent>
-        <MdEventAvailable style={{ color: colors.foreground.white, verticalAlign: "middle", width: "1.5rem" }}/>
-        <span style={{ verticalAlign: "middle" }}>{getTitle()}</span>
-      </Indent>
-      {showHost && <Indent>
-        <MdAccountBox style={{ color: colors.foreground.white, verticalAlign: "middle", width: "1.5rem" }}/>
-        <span style={{ verticalAlign: "middle" }}>
-          {currentMeeting.organizer.displayName}
-          {showGuests && guests.length > 0 && guests.length <= 5 && (", " + guests.map(u => u.displayName).join(", "))}
-          {showGuests && guests.length > 0 && guests.length > 5 && (" " + i18next.t("meeting.guests", { count: guests.length }))}
-        </span>
-      </Indent>}
+      <Title>{getTitle()}</Title>
+      <Meta>{getTime()}
+      {showHost && (
+          <span style={{ verticalAlign: "middle" }}>
+            {currentMeeting.organizer.displayName}
+            {showGuests &&
+              guests.length > 0 &&
+              " " + i18next.t("meeting.guests", { count: guests.length })}
+          </span>
+      )}
+      </Meta>
+        {currentMeeting && <MeetingsProgressBar timeStarted={currentMeeting.startTimestamp} timeEnding={currentMeeting.endTimestamp} currentTime={Date.now()}/>}
     </Wrapper>
   );
 };

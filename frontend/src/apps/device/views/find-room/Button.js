@@ -1,4 +1,4 @@
-import ExternalButton from 'apps/device/views/single-calendar-2/actions-bar/Button'
+import ExternalButton from 'apps/device/views/single-calendar/actions-bar/Button'
 
 import styled from 'styled-components'
 

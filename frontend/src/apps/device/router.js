@@ -11,7 +11,7 @@ import {
 } from "./selectors/selectors";
 
 import Dashboard from "./views/dashboard";
-import SingleCalendar from "./views/single-calendar-2";
+import SingleCalendar from "./views/single-calendar";
 import AllCalendars from "./views/find-room";
 import ConnectionCode from "./views/connect/ConnectionCode";
 import NoCalendar from "./views/connect/NoCalendar";

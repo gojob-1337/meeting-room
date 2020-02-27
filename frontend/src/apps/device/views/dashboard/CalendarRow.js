@@ -10,7 +10,7 @@ import {
 } from "apps/device/selectors/selectors";
 import { connect } from "react-redux";
 import { prettyFormatMinutes, timeDifferenceInMinutes } from "services/formatting";
-import * as i18next from "i18next";
+import i18next from "i18next";
 
 const CalendarRow = ({ calendarName, timestamp, currentMeeting, nextMeeting }) => {
   if (currentMeeting) {

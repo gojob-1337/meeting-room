@@ -18,7 +18,7 @@ import { getMeetingSummary, prettyFormatMinutes, timeDifferenceInMinutes } from 
 import { Time } from "theme";
 import { deviceActions, meetingActions } from "apps/device/actions/actions";
 import ActionError from "../../components/ActionError";
-import Section, { partialMixin } from "dark/Section";
+import Section from "dark/Section";
 import LoaderButton from "dark/LoaderButton";
 import colors from "dark/colors";
 import Button from "./Button";
@@ -37,9 +37,6 @@ const Header = styled.div`
 `;
 
 const RowWrapper = styled(Section)`
-  :first-child {
-    ${partialMixin};
-  }
 `;
 
 const RowCard = styled.div(props => ({
