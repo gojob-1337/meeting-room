@@ -34,7 +34,7 @@ const CalendarDetails = styled.div`
 
 const CompanyLogo = styled.div`
   position: absolute;
-  height: 3.5rem;
+  height: 3rem;
   top: .5rem;
   left: 1rem;
 `;
@@ -85,10 +85,10 @@ const Spacer = styled.div`
 `;
 
 const statusBg = (calendarName) => ({
-  available: `linear-gradient(135deg, rgba(0,136,51,0.8) 0%, rgba(0,204,51,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
-  occupied: `linear-gradient(135deg, rgba(192,0,0,0.8) 0%, rgba(224,0,0,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
-  warning: `linear-gradient(135deg, rgba(0,85,153,0.8) 0%, rgba(0,119,187,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
-  checkin: `linear-gradient(135deg, rgba(254,104,0,0.8) 0%, rgba(251,59,0,0.8) 100%), url("backgrounds/${calendarName}/bg.jpg");`
+  available: `linear-gradient(135deg, rgba(0,136,51,0.6) 0%, rgba(0,204,51,0.6) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
+  occupied: `linear-gradient(135deg, rgba(192,0,0,0.6) 0%, rgba(224,0,0,0.6) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
+  warning: `linear-gradient(135deg, rgba(0,85,153,0.6) 0%, rgba(0,119,187,0.6) 100%), url("backgrounds/${calendarName}/bg.jpg");`,
+  checkin: `linear-gradient(135deg, rgba(254,104,0,0.6) 0%, rgba(251,59,0,0.6) 100%), url("backgrounds/${calendarName}/bg.jpg");`
 });
 
 const CalendarView = ({
